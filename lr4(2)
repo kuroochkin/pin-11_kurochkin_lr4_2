@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <iostream>
+#include <ctime>
+#include <locale>
+#include <iomanip>
+using namespace std;
+#define N 10
+
+int* find_min(int a[N][N], int* minimum)
+{
+	int min = 55;
+	for (int i = 0; i < N; i++)
+	{
+
+		for (int j = 0; j < N; j++)
+		{
+			if ((i >= j) & (i + j < N))
+			{
+				if (a[i][j] < min)
+					min = a[i][j];
+			}
+
+		}
+
+	}
+	minimum = &min;
+	return minimum;
+}
+
+int* find_max(int a[N][N], int* maximum)
+{
+	int max = -55;
+	for (int i = 0; i < N; i++)
+	{
+
+		for (int j = 0; j < N; j++)
+		{
+			if ((i <= j) & (i + j >= N - 1))
+			{
+				if (a[i][j] > max)
+					max = a[i][j];
+			}
+		}
+
+	}
+	maximum = &max;
+	return maximum;
+}
+
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	srand(time(0));
+	int a[N][N];
+	int i = 0;
+	int j = 0;
+	int* px = 0;
+	cout << "Выведем случайный массив:\n\n";
+
+	for (int i = 0; i < N; i++)
+	{
+
+		for (int j = 0; j < N; j++)
+		{
+			a[i][j] = rand() % 100 - 50;
+			cout << setw(3) << a[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+	cout << "------------------------------------------------------------\n\n";
+	px = find_min(a, px);
+	cout << "Выведем минимум в левой заштрихованной области массива и максиум в правой:\n\n" << *px << "\t";
+	px = find_max(a, px);
+	cout << *px << "\t";
+}
